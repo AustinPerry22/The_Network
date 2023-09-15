@@ -1,5 +1,5 @@
 <template>
-  <div v-for="post in posts" :key="post.id">
+  <div v-for="post in posts" :key="post.id" class="row justify-content-center">
     <PostCard :post="post" />
   </div>
 </template>
