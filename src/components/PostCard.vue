@@ -2,7 +2,9 @@
     <div class="col-11 py-2 my-3 bg-white elevation-5">
         <section class="row">
             <div class="col-2">
-                <img :src="post.creator.picture" class="profile-pic">
+                <router-link :to="{ name: 'Profile', params: { profileId: post.creatorId } }">
+                    <img :src="post.creator.picture" class="profile-pic selectable">
+                </router-link>
             </div>
             <div class="col-8">
                 <h5>{{ post.creator.name }}</h5>
@@ -22,14 +24,14 @@
                 <img :src="post.imgUrl" class="post-img">
             </div>
         </section>
-        <section v-if="account.id" class="row justify-content-end">
+        <!-- <section class="row justify-content-end">
             <div class="col-6 text-end">
                 <h3 class="mb-0">{{ post.likes.length }}<i class="mdi mdi-heart selectable"></i>
                 </h3>
                 <h3 class="mb-0">{{ post.likes.length }}<i class="mdi mdi-heart-outline selectable"></i></h3>
             </div>
-        </section>
-        <section v-else class="row justify-content-end">
+        </section> -->
+        <section class="row justify-content-end">
             <div class="col-6 text-end">
                 <h3 class="mb-0">Likes: {{ post.likes.length }}</h3>
             </div>
