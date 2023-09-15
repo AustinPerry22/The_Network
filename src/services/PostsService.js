@@ -8,9 +8,7 @@ import { api } from "./AxiosService"
 class PostsService {
     async getPosts() {
         const res = await api.get('api/posts')
-        const newPosts = res.data.posts.map(post => new Post(post))
-        AppState.posts = newPosts
-        logger.log(res.data.posts)
+        AppState.posts = res.data.posts.map(post => new Post(post))
     }
 
     async getPostsByProfile(profileId) {
