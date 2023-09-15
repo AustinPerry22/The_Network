@@ -1,11 +1,12 @@
 <template>
-  home page
+  {{ posts }}
 </template>
 
 <script>
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import Pop from '../utils/Pop';
 import { postsService } from '../services/PostsService.js'
+import { AppState } from '../AppState';
 
 export default {
   setup() {
@@ -18,7 +19,9 @@ export default {
         Pop.error(error)
       }
     }
-    return {}
+    return {
+      posts: computed(() => AppState.posts)
+    }
   }
 }
 </script>
