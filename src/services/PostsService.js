@@ -18,7 +18,6 @@ class PostsService {
     async getPostsByProfile(profileId) {
         AppState.posts = []
         const res = await api.get(`api/posts?creatorId=${profileId}`)
-        logger.log(res.data)
         AppState.posts = res.data.posts.map(post => new Post(post))
         AppState.older = res.data.older
         AppState.newer = res.data.newer
