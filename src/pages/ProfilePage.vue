@@ -32,6 +32,14 @@
             </section>
         </div>
     </section>
+    <section class="row justify-content-between">
+        <div class="col-3">
+            <button @click="changePosts(previousUrl)" class="btn btn-light" :disabled="!previousUrl">Previous</button>
+        </div>
+        <div class="col-3">
+            <button @click="changePosts(nextUrl)" class="btn btn-light" :disabled="!nextUrl">Next</button>
+        </div>
+    </section>
     <div v-for="post in posts" :key="post.id" class="row justify-content-center">
         <PostCard :post="post" />
     </div>
@@ -76,7 +84,17 @@ export default {
         return {
             profile: computed(() => AppState.activeProfile),
             coverImg: computed(() => `url(${AppState.activeProfile?.coverImg}`),
-            posts: computed(() => AppState.posts)
+            posts: computed(() => AppState.posts),
+            nextUrl: computed(() => AppState.older),
+            previousUrl: computed(() => AppState.newer),
+
+            async changePosts(url) {
+                try {
+                    await postsService.changePosts(url)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
         };
     },
     components: { PostCard }

@@ -11,4 +11,8 @@ export const AppState = reactive({
 
   /**@type {Profile} */
   activeProfile: {},
+
+  older: null,
+
+  newer: null,
 })
