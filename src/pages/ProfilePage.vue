@@ -44,7 +44,8 @@ import Pop from '../utils/Pop';
 import { profileService } from '../services/ProfileService.js'
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger';
-import { postsService } from '../services/PostsService';
+import { postsService } from '../services/PostsService.js';
+import PostCard from '../components/PostCard.vue';
 
 export default {
 
@@ -65,8 +66,9 @@ export default {
 
         async function getPostsByProfile() {
             try {
-                AppState.posts = []
+                logger.log('getting postst by profile')
                 await postsService.getPostsByProfile(route.params.profileId)
+                logger.log(AppState.posts)
             } catch (error) {
                 Pop.error(error)
             }
@@ -77,6 +79,7 @@ export default {
             posts: computed(() => AppState.posts)
         };
     },
+    components: { PostCard }
 };
 </script>
 

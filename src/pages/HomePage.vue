@@ -10,6 +10,7 @@ import Pop from '../utils/Pop';
 import { postsService } from '../services/PostsService.js'
 import { AppState } from '../AppState';
 import PostCard from '../components/PostCard.vue';
+import { logger } from '../utils/Logger';
 
 export default {
   setup() {
@@ -17,6 +18,7 @@ export default {
     async function getPosts() {
       try {
         await postsService.getPosts();
+        logger.log(AppState.posts)
       }
       catch (error) {
         Pop.error(error);
