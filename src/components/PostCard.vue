@@ -10,8 +10,9 @@
                 <h5>{{ post.creator.name }}</h5>
                 <h6>{{ post.createdAt }}</h6>
             </div>
-            <div class="col-2">
-                <button v-if="post.creatorId == account.id" class="btn"><i class="mdi mdi-dots-horizontal"></i></button>
+            <div v-if="post.creatorId == account.id" class="col-2">
+                <button  class="btn btn-warning"><i class="mdi mdi-pencil-outline"></i></button>
+                <button @click="deletePost" class="btn btn-danger"><i class="mdi mdi-delete-outline"></i></button>
             </div>
         </section>
         <section class="row">
@@ -44,6 +45,8 @@ import { computed, onMounted } from 'vue';
 import { Post } from '../models/Post';
 import { AppState } from '../AppState';
 import { logger } from '../utils/Logger';
+import Pop from '../utils/Pop';
+import { postsService } from '../services/PostsService';
 
 export default {
     props: { post: { type: Post, required: true } },
@@ -51,6 +54,17 @@ export default {
 
         return {
             account: computed(() => AppState.account),
+
+            async deletePost(){
+                try {
+                    if(await Pop.confirm('Are you sure you want to delete this post?')){
+                        await postsService.deletePost(props.post.id)
+                        Pop.success('post deleted')
+                    }
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
 
 
         };
