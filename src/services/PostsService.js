@@ -24,10 +24,16 @@ class PostsService {
     }
 
     async changePosts(url) {
-        const res = await axios.get(url)
+        const res = await api.get(url)
         AppState.posts = res.data.posts.map(post => new Post(post))
         AppState.older = res.data.older
         AppState.newer = res.data.newer
+    }
+
+    async createPost(post){
+        const res = await api.post('api/posts', post)
+        const newPost = new Post(res.data)
+        AppState.posts.unshift(newPost)
     }
 }
 
