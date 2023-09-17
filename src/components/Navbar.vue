@@ -35,11 +35,18 @@ export default {
 
       async searchPosts(){
         try {
+          let res = null
           if(route.params.profileId){
-            await postsService.searchPosts(postData.value.search, route.params.profileId)
+            res = await postsService.searchPosts(postData.value.search, route.params.profileId)
           } else{
-            await postsService.searchPosts(postData.value.search)
+            res = await postsService.searchPosts(postData.value.search)
           }
+          if(res){
+            Pop.success(`found ${res} results with search of ${postData.value.search}`)
+          } else{
+            Pop.toast(`found no results for search term ${postData.value.search}`)
+          }
+            
           postData.value = {}
         } catch (error) {
           Pop.error(error)

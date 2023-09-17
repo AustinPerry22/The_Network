@@ -20,17 +20,7 @@
       </form>
     </div>
   </section>
-  <section class="row justify-content-between text-center">
-    <div class="col-3">
-      <button @click="changePosts(previousUrl)" class="btn btn-light" :disabled="!previousUrl">Previous</button>
-    </div>
-    <div class="col-3">
-      <button @click="changePosts(nextUrl)" class="btn btn-light" :disabled="!nextUrl">Next</button>
-    </div>
-  </section>
-  <div v-for="post in posts" :key="post.id" class="row justify-content-center">
-    <PostCard :post="post" />
-  </div>
+  <PostsList/>
 </template>
 
 <script>
@@ -38,7 +28,7 @@ import { computed, onMounted, ref } from 'vue';
 import Pop from '../utils/Pop';
 import { postsService } from '../services/PostsService.js'
 import { AppState } from '../AppState';
-import PostCard from '../components/PostCard.vue';
+import PostsList from '../components/PostsList.vue';
 import { logger } from '../utils/Logger';
 
 export default {
@@ -47,6 +37,8 @@ export default {
     onMounted(() => getPosts())
     async function getPosts() {
       try {
+        AppState.posts = []
+        AppState.searchPosts = []
         await postsService.getPosts();
       }
       catch (error) {
@@ -56,17 +48,6 @@ export default {
     return {
       postData,
       accountId: computed(()=> AppState.account.id),
-      posts: computed(() => AppState.posts),
-      nextUrl: computed(() => AppState.older),
-      previousUrl: computed(() => AppState.newer),
-
-      async changePosts(url) {
-        try {
-          await postsService.changePosts(url)
-        } catch (error) {
-          Pop.error(error)
-        }
-      },
 
       async createPost(){
         try {
@@ -79,7 +60,7 @@ export default {
       }
     };
   },
-  components: { PostCard }
+  components: { PostsList }
 }
 </script>
 

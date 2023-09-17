@@ -3,6 +3,7 @@ import { AppState } from "../AppState"
 import { Post } from "../models/Post"
 import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
+import Pop from "../utils/Pop"
 
 
 
@@ -24,15 +25,14 @@ class PostsService {
     }
 
     async searchPosts(search, profileId){
-        AppState.posts = []
         let profilequery = ''
         if(profileId) {
             profilequery = `&creatorId=${profileId}`
         }
         const res = await api.get(`api/posts?body=${search + profilequery}`)
-        AppState.posts = res.data.posts.map(post => new Post(post))
-        AppState.older = res.data.older
-        AppState.newer = res.data.newer
+        if(res.data.posts.length == 0) return 0
+        AppState.searchPosts = res.data.posts.map(post => new Post(post))
+        return AppState.searchPosts.length
     }
     
     async changePosts(url) {

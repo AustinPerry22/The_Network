@@ -24,7 +24,8 @@
                     <h4>resume: {{ profile.resume }}</h4>
                 </div>
                 <div class="col-6">
-                    <h4>graduated: {{ profile.graduated }}</h4>
+                    <h4 v-if="profile.graduated">Graduate</h4>
+                    <h4 v-else>Hasn't graduated yet</h4>
                 </div>
             </section>
             <section class="row">
@@ -32,17 +33,8 @@
             </section>
         </div>
     </section>
-    <section class="row justify-content-between">
-        <div class="col-3">
-            <button @click="changePosts(previousUrl)" class="btn btn-light" :disabled="!previousUrl">Previous</button>
-        </div>
-        <div class="col-3">
-            <button @click="changePosts(nextUrl)" class="btn btn-light" :disabled="!nextUrl">Next</button>
-        </div>
-    </section>
-    <div v-for="post in posts" :key="post.id" class="row justify-content-center">
-        <PostCard :post="post" />
-    </div>
+    
+    <PostsList/>
 </template>
 
 <script>
@@ -53,7 +45,7 @@ import { profileService } from '../services/ProfileService.js'
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger';
 import { postsService } from '../services/PostsService.js';
-import PostCard from '../components/PostCard.vue';
+import PostsList from '../components/PostsList.vue';
 
 export default {
 
@@ -74,9 +66,9 @@ export default {
 
         async function getPostsByProfile() {
             try {
-                logger.log('getting postst by profile')
+                AppState.posts = []
+                AppState.searchPosts = []
                 await postsService.getPostsByProfile(route.params.profileId)
-                logger.log(AppState.posts)
             } catch (error) {
                 Pop.error(error)
             }
@@ -84,20 +76,9 @@ export default {
         return {
             profile: computed(() => AppState.activeProfile),
             coverImg: computed(() => `url(${AppState.activeProfile?.coverImg}`),
-            posts: computed(() => AppState.posts),
-            nextUrl: computed(() => AppState.older),
-            previousUrl: computed(() => AppState.newer),
-
-            async changePosts(url) {
-                try {
-                    await postsService.changePosts(url)
-                } catch (error) {
-                    Pop.error(error)
-                }
-            }
         };
     },
-    components: { PostCard }
+    components: { PostsList }
 };
 </script>
 
