@@ -21,19 +21,25 @@
 </template>
 
 <script>
+import { useRoute } from 'vue-router';
 import { postsService } from '../services/PostsService';
 import Pop from '../utils/Pop';
 import Login from './Login.vue';
 import { ref } from 'vue';
 export default {
   setup() {
+    const route = useRoute()
     const postData = ref({})
     return {
       postData,
 
       async searchPosts(){
         try {
-          await postsService.searchPosts(postData.value.search)
+          if(route.params.profileId){
+            await postsService.searchPosts(postData.value.search, route.params.profileId)
+          } else{
+            await postsService.searchPosts(postData.value.search)
+          }
           postData.value = {}
         } catch (error) {
           Pop.error(error)

@@ -23,9 +23,13 @@ class PostsService {
         AppState.newer = res.data.newer
     }
 
-    async searchPosts(query){
+    async searchPosts(search, profileId){
         AppState.posts = []
-        const res = await api.get(`api/posts?body=${query}`)
+        let profilequery = ''
+        if(profileId) {
+            profilequery = `&creatorId=${profileId}`
+        }
+        const res = await api.get(`api/posts?body=${search + profilequery}`)
         AppState.posts = res.data.posts.map(post => new Post(post))
         AppState.older = res.data.older
         AppState.newer = res.data.newer
