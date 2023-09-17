@@ -18,6 +18,14 @@
         <div v-for="post in posts" :key="post.id" class="row justify-content-center">
             <PostCard :post="post" />
         </div>
+        <section class="row justify-content-between">
+        <div class="col-3">
+            <button @click="changePosts(previousUrl)" class="btn btn-light" :disabled="!previousUrl">Previous</button>
+        </div>
+        <div class="col-3">
+            <button @click="changePosts(nextUrl)" class="btn btn-light" :disabled="!nextUrl">Next</button>
+        </div>
+        </section>
     </div>
 </template>
 

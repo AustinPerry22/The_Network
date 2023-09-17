@@ -6,8 +6,8 @@
           <Navbar />
         </section>
         <section class="row">
-          <div class="col-2 h-100 sticky-top-2">
-            hello
+          <div class="col-2 h-100 sticky-top-2 justify-content-center">
+            <Login/>
           </div>
           <div class="col-8">
             <router-view />
@@ -31,6 +31,7 @@ import AdCard from './components/AdCard.vue'
 import {adsService} from './services/AdsService'
 import Pop from './utils/Pop'
 import { logger } from './utils/Logger'
+import Login from './components/Login.vue'
 
 export default {
   setup() {
@@ -49,7 +50,7 @@ export default {
       ads: computed(() => AppState.ads)
     }
   },
-  components: { Navbar, AdCard }
+  components: { Navbar, AdCard, Login }
 }
 </script>
 <style lang="scss">
