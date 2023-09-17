@@ -5,6 +5,7 @@
         <h2>The Network</h2>
       </div>
     </router-link>
+    <button v-if="accountId && (route.name == 'Home' || route.name =='Account')" class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#createForm" aria-expanded="false" aria-controls="createForm">New Post</button>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -14,8 +15,6 @@
         <label for="search">Find Posts</label>
         <input v-model="postData.search" type="text" id="search" maxlength="25" placeholder="search here">
       </form>
-      <!-- LOGIN COMPONENT HERE -->
-      <Login />
     </div>
   </nav>
 </template>
@@ -24,14 +23,16 @@
 import { useRoute } from 'vue-router';
 import { postsService } from '../services/PostsService';
 import Pop from '../utils/Pop';
-import Login from './Login.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { AppState } from '../AppState';
 export default {
   setup() {
     const route = useRoute()
     const postData = ref({})
     return {
       postData,
+      accountId: computed(()=> AppState.account.id),
+      route,
 
       async searchPosts(){
         try {
@@ -55,7 +56,6 @@ export default {
 
     }
   },
-  components: { Login }
 }
 </script>
 

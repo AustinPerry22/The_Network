@@ -1,8 +1,8 @@
 <template>
   <section v-if="accountId" class="row justify-content-center text-center mt-2">
-    <div class="col-4">
-      <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#createForm" aria-expanded="false" aria-controls="createForm">Toggle Create Post Form</button>
-    </div>
+    <!-- <div class="col-4"> -->
+      <!-- <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#createForm" aria-expanded="false" aria-controls="createForm">Toggle Create Post Form</button>
+    </div> -->
     <div class="collapse col-12" id="createForm">
       <form @submit.prevent="createPost" class="row mt-3">
         <div class="col-12">

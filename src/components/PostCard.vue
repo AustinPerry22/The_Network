@@ -2,9 +2,7 @@
     <div class="col-11 py-2 my-3 bg-white elevation-5">
         <section class="row">
             <div class="col-2">
-                <router-link :to="{ name: 'Profile', params: { profileId: post.creatorId } }">
-                    <img :src="post.creator.picture" class="profile-pic selectable">
-                </router-link>
+                <img @click="changePage" :src="post.creator.picture" class="profile-pic selectable">
             </div>
             <div class="col-8">
                 <h5>{{ post.creator.name }}</h5>
@@ -47,6 +45,7 @@ import { AppState } from '../AppState';
 import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop';
 import { postsService } from '../services/PostsService';
+import { router } from '../router';
 
 export default {
     props: { post: { type: Post, required: true } },
@@ -64,6 +63,14 @@ export default {
                     });
                     return liked
             }),
+
+            changePage() {
+                if(props.post.creatorId == AppState.account.id){
+                    router.push({ name: 'Account'})
+                } else{
+                    router.push({ name: 'Profile', params: { profileId: props.post.creatorId } })
+                }
+            },
 
             async toggleLike(){
                 try {
