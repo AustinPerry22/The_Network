@@ -13,7 +13,9 @@
             <router-view />
           </div>
           <div class="col-3">
-            ads component here
+            <div v-for="ad in ads" :key="ad.id" class="row justify-content-center">
+              <AdCard :ad="ad"/>
+            </div>
           </div>
         </section>
       </div>
@@ -22,17 +24,32 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
+import AdCard from './components/AdCard.vue'
+import {adsService} from './services/AdsService'
+import Pop from './utils/Pop'
+import { logger } from './utils/Logger'
 
 export default {
   setup() {
+    onMounted(()=> getAds())
+
+    async function getAds(){
+      try {
+        logger.log('getting ads controller')
+        await adsService.getAds()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
     return {
-      appState: computed(() => AppState)
+      appState: computed(() => AppState),
+      ads: computed(() => AppState.ads)
     }
   },
-  components: { Navbar }
+  components: { Navbar, AdCard }
 }
 </script>
 <style lang="scss">
