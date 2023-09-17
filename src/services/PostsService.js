@@ -23,6 +23,14 @@ class PostsService {
         AppState.newer = res.data.newer
     }
 
+    async searchPosts(query){
+        AppState.posts = []
+        const res = await api.get(`api/posts?body=${query}`)
+        AppState.posts = res.data.posts.map(post => new Post(post))
+        AppState.older = res.data.older
+        AppState.newer = res.data.newer
+    }
+    
     async changePosts(url) {
         const res = await api.get(url)
         AppState.posts = res.data.posts.map(post => new Post(post))
@@ -30,6 +38,15 @@ class PostsService {
         AppState.newer = res.data.newer
     }
 
+    async toggleLike(postId){
+        const res = await api.post(`api/posts/${postId}/like`)
+        const postIndex = AppState.posts.findIndex(post => post.id == postId)
+        const newPost = new Post(res.data)
+        if(postIndex >= 0){
+            AppState.posts.splice(postIndex, 1, newPost)
+        }
+    }
+    
     async createPost(post){
         const res = await api.post('api/posts', post)
         const newPost = new Post(res.data)
@@ -43,6 +60,7 @@ class PostsService {
             AppState.posts.splice(postIndex, 1)
         }
     }
+
 }
 
 export const postsService = new PostsService()

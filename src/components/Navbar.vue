@@ -9,14 +9,11 @@
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto">
-        <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
-          </router-link>
-        </li>
-      </ul>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarText">
+      <form @submit.prevent="searchPosts">
+        <label for="search">Find Posts</label>
+        <input v-model="postData.search" type="text" id="search" maxlength="25" placeholder="search here">
+      </form>
       <!-- LOGIN COMPONENT HERE -->
       <Login />
     </div>
@@ -24,10 +21,26 @@
 </template>
 
 <script>
+import { postsService } from '../services/PostsService';
+import Pop from '../utils/Pop';
 import Login from './Login.vue';
+import { ref } from 'vue';
 export default {
   setup() {
-    return {}
+    const postData = ref({})
+    return {
+      postData,
+
+      async searchPosts(){
+        try {
+          await postsService.searchPosts(postData.value.search)
+          postData.value = {}
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
+
+    }
   },
   components: { Login }
 }
