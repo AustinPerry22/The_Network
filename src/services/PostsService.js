@@ -45,9 +45,13 @@ class PostsService {
     async toggleLike(postId){
         const res = await api.post(`api/posts/${postId}/like`)
         const postIndex = AppState.posts.findIndex(post => post.id == postId)
+        const searchPostIndex = AppState.searchPosts.findIndex(post => post.id == postId)
         const newPost = new Post(res.data)
         if(postIndex >= 0){
             AppState.posts.splice(postIndex, 1, newPost)
+        }
+        if(searchPostIndex >= 0){
+            AppState.searchPosts.splice(searchPostIndex, 1, newPost)
         }
     }
     
