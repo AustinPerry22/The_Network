@@ -1,19 +1,19 @@
 <template>
   <main class="container-fluid">
     <section class="row">
-      <div class="col-2 align-self-center">
-        <Login />
-      </div>
-      <div class="col-10">
-        <section class="row">
+      <div class="col-12">
+        <section class="row sticky-top">
           <Navbar />
         </section>
         <section class="row">
-          <div class="col-9">
+          <div class="col-2 h-100 sticky-top-2">
+            hello
+          </div>
+          <div class="col-8">
             <router-view />
           </div>
-          <div class="col-3">
-            <div v-for="ad in ads" :key="ad.id" class="row justify-content-center">
+          <div class="col-2 sticky-top-2 h-100">
+            <div v-for="ad in ads" :key="ad.id" class="row justify-content-center mb-4">
               <AdCard :ad="ad"/>
             </div>
           </div>
@@ -58,7 +58,10 @@ export default {
 :root {
   --main-height: calc(100vh - 32px - 64px);
 }
-
+.sticky-top-2{
+  position: sticky;
+  top: 10vh;
+}
 
 footer {
   display: grid;
