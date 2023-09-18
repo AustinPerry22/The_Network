@@ -27,7 +27,6 @@ import Pop from '../utils/Pop';
 import { AppState } from '../AppState';
 export default {
   setup() {
-
     const postData = ref({})
     
     return {

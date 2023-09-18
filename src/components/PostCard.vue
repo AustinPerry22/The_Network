@@ -9,7 +9,7 @@
                 <h6>{{ post.createdAt }}</h6>
             </div>
             <div v-if="post.creatorId == accountId" class="col-2">
-                <button  class="btn btn-warning"><i class="mdi mdi-pencil-outline"></i></button>
+                <button  @click="editPost" class="btn btn-warning"><i class="mdi mdi-pencil-outline"></i></button>
                 <button @click="deletePost" class="btn btn-danger"><i class="mdi mdi-delete-outline"></i></button>
             </div>
         </section>
@@ -84,6 +84,10 @@ export default {
                 } catch (error) {
                     Pop.error(error)
                 }
+            },
+
+            async editPost(){
+                
             }
         };
     },
