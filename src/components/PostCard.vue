@@ -65,11 +65,7 @@ export default {
             }),
 
             changePage() {
-                if(props.post.creatorId == AppState.account.id){
-                    router.push({ name: 'Account'})
-                } else{
-                    router.push({ name: 'Profile', params: { profileId: props.post.creatorId } })
-                }
+                router.push({ name: 'Profile', params: { profileId: props.post.creatorId } })
             },
 
             async toggleLike(){

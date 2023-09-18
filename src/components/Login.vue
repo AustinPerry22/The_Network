@@ -14,6 +14,7 @@
           <router-link :to="{ name: 'Account' }">
             <img :src="account.picture || user.picture" alt="account photo" height="150" class="rounded-circle" />
           </router-link>
+          <p>edit account</p>
           <div>
             <button @click="logout" class="btn btn-light">logout</button>
           </div>
@@ -48,5 +49,8 @@ export default {
 .loginCard{
   background: rgb(200, 255, 193);
   border-radius: 2em;
+}
+img{
+  width: 75%;
 }
 </style>
