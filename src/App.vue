@@ -39,7 +39,6 @@ export default {
 
     async function getAds() {
       try {
-        logger.log('getting ads controller')
         await adsService.getAds()
       } catch (error) {
         Pop.error(error)

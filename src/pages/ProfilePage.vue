@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import Pop from '../utils/Pop';
 import { profileService } from '../services/ProfileService.js'
@@ -38,13 +38,19 @@ import CreatePost from '../components/createPost.vue';
 export default {
 
     setup() {
+        const route = useRoute();
         onMounted(() => {
             getProfile()
             getPostsByProfile()
         })
 
+        watchEffect(() => {
+            route.params.profileId
+            getProfile()
+            getPostsByProfile()
+        })
 
-        const route = useRoute();
+
         async function getProfile() {
             try {
                 AppState.activeProfile = {}
