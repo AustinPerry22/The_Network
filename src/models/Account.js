@@ -9,6 +9,8 @@ export class Account {
     this.linkedin = data.linkedin
     this.resume = data.resume
     this.coverImg = data.coverImg
+    this.graduated = data.graduated
+    this.bio = data.bio
     // TODO add additional properties if needed
   }
 }

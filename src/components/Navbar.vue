@@ -14,6 +14,7 @@
       <form @submit.prevent="searchPosts">
         <label for="search">Find Posts</label>
         <input v-model="postData.search" type="text" id="search" maxlength="25" placeholder="search here">
+        <button class="btn btn-dark">search</button>
       </form>
     </div>
   </nav>
