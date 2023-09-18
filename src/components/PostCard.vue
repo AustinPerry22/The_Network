@@ -57,7 +57,6 @@ export default {
                     let liked = false
                     props.post.likes.forEach(like => {
                         if(like == AppState.account.id){
-                            logger.log('liked')
                             liked = true
                         }
                     });

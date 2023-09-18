@@ -33,19 +33,22 @@
             </section>
         </div>
     </section>
-    
+    <div v-if="profile.id == accountId">
+        <CreatePost/>
+    </div>
     <PostsList/>
 </template>
 
 <script>
-import { computed, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { computed, onMounted} from 'vue';
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
 import Pop from '../utils/Pop';
 import { profileService } from '../services/ProfileService.js'
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger';
 import { postsService } from '../services/PostsService.js';
 import PostsList from '../components/PostsList.vue';
+import CreatePost from '../components/createPost.vue';
 
 export default {
 
@@ -54,6 +57,8 @@ export default {
             getProfile()
             getPostsByProfile()
         })
+
+
         const route = useRoute();
         async function getProfile() {
             try {
@@ -75,10 +80,11 @@ export default {
         }
         return {
             profile: computed(() => AppState.activeProfile),
+            accountId: computed(()=> AppState.account.id),
             coverImg: computed(() => `url(${AppState.activeProfile?.coverImg}`),
         };
     },
-    components: { PostsList }
+    components: { PostsList, CreatePost }
 };
 </script>
 

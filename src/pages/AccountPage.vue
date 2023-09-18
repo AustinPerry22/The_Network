@@ -18,8 +18,6 @@
         <input v-model="accountData.coverImg" type="text" name="coverImg" maxlength="100">
         <button type="submit" class="btn btn-dark">submit</button>
   </form>
-  
-  <CreatePost/>
 </template>
 
 <script>

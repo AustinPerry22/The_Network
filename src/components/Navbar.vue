@@ -5,7 +5,6 @@
         <h2>The Network</h2>
       </div>
     </router-link>
-    <button v-if="accountId && (route.name == 'Home' || route.name =='Account')" class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#createForm" aria-expanded="false" aria-controls="createForm">New Post</button>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
