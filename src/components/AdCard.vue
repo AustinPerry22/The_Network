@@ -1,5 +1,5 @@
-<template> 
-<!-- inside a row in a col-3 -->
+<template>
+    <!-- inside a row in a col-3 -->
     <div class="col-12">
         <a :href="link" target="_blank">
             <img :src="ad.sideImg" :alt="ad.title" class="img-fluid selectable">
@@ -7,17 +7,11 @@
     </div>
 </template>
 <script>
-import { onMounted } from 'vue';
 import { Ad } from '../models/Ad';
-import { logger } from '../utils/Logger';
-export default{
-    props: {ad:{type: Ad, required: true}},
-    setup(props){
-        onMounted(()=>{
-            logger.log(props.ad.linkURL, 'link')
-
-        })
-        return{
+export default {
+    props: { ad: { type: Ad, required: true } },
+    setup(props) {
+        return {
             link: `https://${props.ad.linkURL}`
 
         }
@@ -25,8 +19,8 @@ export default{
 }
 </script>
 <style lang="scss" scoped>
-    img{
-     height: 42.5vh;
-     width: 100%;
-    }
+img {
+    height: 40vh;
+    width: 100%;
+}
 </style>
