@@ -1,4 +1,5 @@
 <template>
+  
   <createPost/>
   <PostsList/>
 </template>

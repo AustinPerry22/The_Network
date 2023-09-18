@@ -10,11 +10,13 @@
         </div>
       </div>
       <div v-else>
-        <div v-if="account.picture || user.picture">
-          <router-link :to="{ name: 'Account' }">
+        <div v-if="(account.picture || user.picture) && account.id">
+          <router-link :to="{ name: 'Profile', params: { profileId: account.id } }">
             <img :src="account.picture || user.picture" alt="account photo" height="150" class="rounded-circle" />
           </router-link>
-          <p>edit account</p>
+          <router-link :to="{ name: 'Account' }">
+            <button class="btn btn-light">edit account</button>
+          </router-link>
           <div>
             <button @click="logout" class="btn btn-light">logout</button>
           </div>
