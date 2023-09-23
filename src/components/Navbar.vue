@@ -1,21 +1,18 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <h2>The Network</h2>
-      </div>
-    </router-link>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarText">
-      <form @submit.prevent="searchPosts">
-        <label for="search">Find Posts</label>
-        <input v-model="postData.search" type="text" id="search" maxlength="25" placeholder="search here">
-        <button class="btn btn-dark">search</button>
-      </form>
-    </div>
+  <nav class="container-fluid">
+    <section class="row justify-content-between">
+      <router-link class="col-3" :to="{ name: 'Home' }">
+          <h2>The Network</h2>
+      </router-link>
+        <form @submit.prevent="searchPosts" class="col-4">
+          <section class="row">
+           <label for="search" class="col-4 text-end">Find Posts</label>
+           <input v-model="postData.search" type="text" id="search" class="col-6" maxlength="25" placeholder="search here">
+           <button class="btn btn-dark col-2"></button>
+          </section>
+       </form>
+     
+    </section>
   </nav>
 </template>
 
