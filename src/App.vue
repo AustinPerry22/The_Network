@@ -6,15 +6,15 @@
           <Navbar />
         </section>
         <section class="row">
-          <div class="col-2 h-100 sticky-top-2 justify-content-center">
-            <Login/>
+          <div class="col-2 sticky-top-2 h-100 justify-content-center">
+            <Login />
           </div>
           <div class="col-8">
             <router-view />
           </div>
           <div class="col-2 sticky-top-2 h-100">
-            <div v-for="ad in ads" :key="ad.id" class="row justify-content-center mb-4">
-              <AdCard :ad="ad"/>
+            <div v-for="ad in ads" :key="ad.id" class="row justify-content-center mb-3">
+              <AdCard :ad="ad" />
             </div>
           </div>
         </section>
@@ -28,18 +28,17 @@ import { computed, onMounted } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import AdCard from './components/AdCard.vue'
-import {adsService} from './services/AdsService'
+import { adsService } from './services/AdsService'
 import Pop from './utils/Pop'
 import { logger } from './utils/Logger'
 import Login from './components/Login.vue'
 
 export default {
   setup() {
-    onMounted(()=> getAds())
+    onMounted(() => getAds())
 
-    async function getAds(){
+    async function getAds() {
       try {
-        logger.log('getting ads controller')
         await adsService.getAds()
       } catch (error) {
         Pop.error(error)
@@ -59,14 +58,13 @@ export default {
 :root {
   --main-height: calc(100vh - 32px - 64px);
 }
-.sticky-top-2{
+
+.sticky-top-2 {
   position: sticky;
-  top: 10vh;
+  top: 15vh;
 }
 
-footer {
-  display: grid;
-  place-content: center;
-  height: 32px;
+main {
+  background-color: #121212;
 }
 </style>

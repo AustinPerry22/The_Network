@@ -1,30 +1,31 @@
 <template>
-<section class="row">
-  <div class="col-12">
-    <div class="loginCard text-center">
-      <div v-if="!user.isAuthenticated">
+  <section class="row justify-content-center text-light">
+    <div class="loginCard text-center col-11">
+      <div v-if="!user.isAuthenticated" class="row">
         <h2>Please log in</h2>
         <p class="fw-3">logging in allows you to post and like other peoples posts</p>
         <div>
           <button @click="login" class="btn btn-light">login/sign up</button>
         </div>
       </div>
-      <div v-else>
-        <div v-if="(account.picture || user.picture) && account.id">
-          <router-link :to="{ name: 'Profile', params: { profileId: account.id } }">
-            <img :src="account.picture || user.picture" alt="account photo" height="150" class="rounded-circle" />
-          </router-link>
-          <router-link :to="{ name: 'Account' }">
-            <button class="btn btn-light">edit account</button>
-          </router-link>
-          <div>
-            <button @click="logout" class="btn btn-light">logout</button>
-          </div>
+      <div v-else class="row">
+        <div v-if="(account.picture || user.picture) && account.id && account.name" class="col-12">
+          <section class="row justify-content-center">
+            <h6 class="col-12">{{ account.name }}</h6>
+            <router-link :to="{ name: 'Profile', params: { profileId: account.id } }" class="col-12">
+              <img :src="account.picture || user.picture" alt="account photo" height="100" class="rounded-circle" />
+            </router-link>
+            <router-link :to="{ name: 'Account' }" class="my-2">
+              <button class="btn btn-warning p-1">edit account</button>
+            </router-link>
+            <div>
+              <button @click="logout" class="btn btn-danger p-1">logout</button>
+            </div>
+          </section>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 </template>
 
 <script>
@@ -48,11 +49,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.loginCard{
-  background: rgb(200, 255, 193);
-  border-radius: 2em;
+.loginCard {
+  background: #1f2e47;
+  border-radius: .5em;
+  padding: .5em;
 }
-img{
+
+img {
   width: 75%;
 }
 </style>

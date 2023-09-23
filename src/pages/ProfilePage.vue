@@ -1,51 +1,36 @@
 <template>
     <section class="row">
-        <div class="col-12 text-center mt-4 cover-img">
+        <div class="col-12 text-center img-text mt-4 cover-img">
             <img :src="profile.picture" class="profile-pic">
             <h2>{{ profile.name }}</h2>
             <section class="row">
                 <div class="col-6">
-                    <h4>email: {{ profile.email }}</h4>
-                </div>
-                <div class="col-6">
                     <h4>class: {{ profile.class }}</h4>
-                </div>
-            </section>
-            <section class="row">
-                <div class="col-6">
-                    <h4>github: {{ profile.github }}</h4>
-                </div>
-                <div class="col-6">
-                    <h4>linkedin: {{ profile.linkedin }}</h4>
-                </div>
-            </section>
-            <section class="row">
-                <div class="col-6">
-                    <h4>resume: {{ profile.resume }}</h4>
                 </div>
                 <div class="col-6">
                     <h4 v-if="profile.graduated">Graduate</h4>
                     <h4 v-else>Hasn't graduated yet</h4>
                 </div>
-            </section>
-            <section class="row">
-                <h5>Bio: {{ profile.bio }}</h5>
+                <h4 class="col-12">email: {{ profile.email }}</h4>
+                <h4 class="col-12">github: {{ profile.github }}</h4>
+                <h4 class="col-12">linkedin: {{ profile.linkedin }}</h4>
+                <h4 class="col-12">resume: {{ profile.resume }}</h4>
+                <h5 class="col-12">Bio: {{ profile.bio }}</h5>
             </section>
         </div>
     </section>
     <div v-if="profile.id == accountId">
-        <CreatePost/>
+        <CreatePost />
     </div>
-    <PostsList/>
+    <PostsList />
 </template>
 
 <script>
-import { computed, onMounted} from 'vue';
-import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
+import { computed, onMounted, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
 import Pop from '../utils/Pop';
 import { profileService } from '../services/ProfileService.js'
 import { AppState } from '../AppState'
-import { logger } from '../utils/Logger';
 import { postsService } from '../services/PostsService.js';
 import PostsList from '../components/PostsList.vue';
 import CreatePost from '../components/createPost.vue';
@@ -53,13 +38,19 @@ import CreatePost from '../components/createPost.vue';
 export default {
 
     setup() {
+        const route = useRoute();
         onMounted(() => {
             getProfile()
             getPostsByProfile()
         })
 
+        watchEffect(() => {
+            route.params.profileId
+            getProfile()
+            getPostsByProfile()
+        })
 
-        const route = useRoute();
+
         async function getProfile() {
             try {
                 AppState.activeProfile = {}
@@ -80,7 +71,7 @@ export default {
         }
         return {
             profile: computed(() => AppState.activeProfile),
-            accountId: computed(()=> AppState.account.id),
+            accountId: computed(() => AppState.account.id),
             coverImg: computed(() => `url(${AppState.activeProfile?.coverImg}`),
         };
     },
@@ -91,9 +82,15 @@ export default {
 
 <style lang="scss" scoped>
 .profile-pic {
-    height: 8.5em;
-    width: 8.5em;
-    border-radius: 5em;
+    margin-block: 2vh;
+    height: 25vh;
+    width: 25vh;
+    border-radius: 5rem;
+}
+
+.img-text {
+    color: #d6d6d6;
+    text-shadow: 2px 2px 1px black;
 }
 
 .cover-img {

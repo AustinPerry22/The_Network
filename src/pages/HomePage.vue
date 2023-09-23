@@ -1,7 +1,6 @@
 <template>
-  
-  <createPost/>
-  <PostsList/>
+  <createPost />
+  <PostsList />
 </template>
 
 <script>

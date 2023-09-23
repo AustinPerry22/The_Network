@@ -1,18 +1,21 @@
 <template>
-  <nav class="container-fluid">
-    <section class="row justify-content-between">
-      <router-link class="col-3" :to="{ name: 'Home' }">
-          <h2>The Network</h2>
-      </router-link>
-        <form @submit.prevent="searchPosts" class="col-4">
-          <section class="row">
-           <label for="search" class="col-4 text-end">Find Posts</label>
-           <input v-model="postData.search" type="text" id="search" class="col-6" maxlength="25" placeholder="search here">
-           <button class="btn btn-dark col-2"></button>
-          </section>
-       </form>
-     
-    </section>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
+      <div class="d-flex flex-column align-items-center">
+        <h2>The Network</h2>
+      </div>
+    </router-link>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarText">
+      <form @submit.prevent="searchPosts">
+        <label for="search">Find Posts</label>
+        <input v-model="postData.search" type="text" id="search" maxlength="25" placeholder="search here">
+        <button class="btn btn-dark">search</button>
+      </form>
+    </div>
   </nav>
 </template>
 
@@ -28,23 +31,23 @@ export default {
     const postData = ref({})
     return {
       postData,
-      accountId: computed(()=> AppState.account.id),
+      accountId: computed(() => AppState.account.id),
       route,
 
-      async searchPosts(){
+      async searchPosts() {
         try {
           let res = null
-          if(route.params.profileId){
+          if (route.params.profileId) {
             res = await postsService.searchPosts(postData.value.search, route.params.profileId)
-          } else{
+          } else {
             res = await postsService.searchPosts(postData.value.search)
           }
-          if(res){
+          if (res) {
             Pop.success(`found ${res} results with search of ${postData.value.search}`)
-          } else{
+          } else {
             Pop.toast(`found no results for search term ${postData.value.search}`)
           }
-            
+
           postData.value = {}
         } catch (error) {
           Pop.error(error)
@@ -57,23 +60,11 @@ export default {
 </script>
 
 <style scoped>
-a:hover {
-  text-decoration: none;
+button {
+  border-radius: 0rem .5rem .5rem 0rem;
 }
 
-.nav-link {
-  text-transform: uppercase;
-}
-
-.navbar-nav .router-link-exact-active {
-  border-bottom: 2px solid var(--bs-success);
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-@media screen and (min-width: 768px) {
-  nav {
-    height: 64px;
-  }
+input {
+  border-radius: .5rem 0rem 0rem .5rem;
 }
 </style>
